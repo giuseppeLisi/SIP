@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SIP</string>
+    <string name="text_welcome_main">Welcome to Stego Image Processing</string>
+    <string name="button_decry_main">Saved Images</string>
+    <string name="button_encry_main">Go to encryption</string>
+    <string name="name_encry_mode">Encryption Mode</string>
+</resources>
