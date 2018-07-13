@@ -13,9 +13,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -26,17 +29,25 @@ import java.io.IOException;
 
 public class EncryptionActivity extends AppCompatActivity {
 
-    private ImageView boxImageEnc;
     private Integer REQUEST_CAMERA=1, SELECT_FILE=0;
+
+    private ImageView boxImageEnc;
+    private Button buttonGoEncry;
+    public EditText textToEncry;
+
     private String userChoosenTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encryption);
-        boxImageEnc = findViewById(R.id.box_image_view);
 
+        buttonGoEncry = (Button) findViewById(R.id.button_to_encryption);
+        textToEncry = (EditText) findViewById(R.id.editText_encryption);
+
+        boxImageEnc = findViewById(R.id.box_image_view);
         boxImageEnc = (ImageView) findViewById(R.id.box_image_view);
+
         FloatingActionButton fabCamera = (FloatingActionButton) findViewById(R.id.fab);
         fabCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +67,6 @@ public class EncryptionActivity extends AppCompatActivity {
                         cameraIntent();
                     else if(userChoosenTask.equals("Choose from Library"))
                         galleryIntent();
-                } else {
-                    //code for deny
                 }
                 break;
         }
@@ -103,9 +112,13 @@ public class EncryptionActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
+
+        //Setta visibilità button e editText per acquisire la stringa da criptare
+        buttonGoEncry.setVisibility(View.VISIBLE);
+        //textToEncry.setVisibility(View.VISIBLE);
     }
 
-    //Manipola il risultato proveniente da startActivityForResult()
+    //Manipola il risultato proveniente da startActivityForResult() e richiama uno dei due metodi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,6 +151,10 @@ public class EncryptionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //Setta visibilità button e editText per acquisire la stringa da criptare
+        buttonGoEncry.setVisibility(View.VISIBLE);
+        textToEncry.setVisibility(View.VISIBLE);
+
         boxImageEnc.setImageBitmap(thumbnail);
     }
 
@@ -152,7 +169,36 @@ public class EncryptionActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        //Setta visibilità button e editText per acquisire la stringa da criptare
+        buttonGoEncry.setVisibility(View.VISIBLE);
+        textToEncry.setVisibility(View.VISIBLE);
+
         boxImageEnc.setImageBitmap(bm);
     }
 
+    //Dialog per inserire Username e password
+    public void signIn(View view) {
+
+        //LayoutInflater inflater = LayoutInflater.from(this);
+        //Get the layout inflater
+        //View signView = inflater.inflate(R.layout.sign_in, null);
+
+        AlertDialog.Builder builderSign = new AlertDialog.Builder(EncryptionActivity.this);
+        builderSign.setView(R.layout.sign_in)
+                .setTitle("Insert your Username and Password")
+                .setCancelable(false)
+                .setPositiveButton("Insert", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Inserire operazioni del pulsante positivo
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Inserire operazioni per il ritornare allìattività
+                    }
+                });
+        builderSign.show();
+    }
 }

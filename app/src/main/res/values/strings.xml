@@ -4,4 +4,5 @@
     <string name="button_decry_main">Saved Images</string>
     <string name="button_encry_main">Go to encryption</string>
     <string name="name_encry_mode">Encryption Mode</string>
+    <string name="text_button_to_encry">Encryption your text</string>
 </resources>

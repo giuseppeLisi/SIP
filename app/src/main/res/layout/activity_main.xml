@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/text_welcome_main"
         android:textColor="@color/colorPrimary"
-        android:textSize="20dp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="96dp"/>
@@ -20,8 +20,7 @@
         android:id="@+id/select_encryption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_welcome_main"
-        android:layout_marginVertical="@dimen/margin_layout"
+        android:layout_marginVertical="@dimen/margin_layout_medium"
         android:layout_centerInParent="true"
         android:text="@string/button_encry_main"
         android:onClick="selectEncryption"/>
@@ -31,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/select_encryption"
-        android:layout_marginVertical="@dimen/margin_layout"
+        android:layout_marginVertical="@dimen/margin_layout_min"
         android:layout_centerInParent="true"
         android:text="@string/button_decry_main"
         android:onClick="selectDecryption"/>

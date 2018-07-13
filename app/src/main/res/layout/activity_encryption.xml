@@ -4,14 +4,35 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".EncryptionActivity">
 
     <ImageView
         android:id="@+id/box_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_layout"
-        android:layout_centerVertical="true"/>
+        android:layout_marginVertical="@dimen/margin_layout_medium"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/editText_encryption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/box_image_view"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/button_to_encryption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editText_encryption"
+        android:layout_margin="@dimen/margin_layout_min"
+        android:text="@string/text_button_to_encry"
+        android:visibility="invisible"
+        android:onClick="signIn"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -19,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/margin_layout"
+        android:layout_margin="@dimen/margin_layout_min"
         android:src="@drawable/ic_fab_camera" />
 
 </RelativeLayout>
