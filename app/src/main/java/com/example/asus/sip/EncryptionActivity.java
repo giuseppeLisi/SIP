@@ -1,6 +1,7 @@
 package com.example.asus.sip;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,6 +39,7 @@ public class EncryptionActivity extends AppCompatActivity {
     public EditText textToEncry;
 
     private String userChoosenTask;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,29 +180,43 @@ public class EncryptionActivity extends AppCompatActivity {
         boxImageEnc.setImageBitmap(bm);
     }
 
-    //Dialog per inserire Username e password
     public void signIn(View view) {
 
-        //LayoutInflater inflater = LayoutInflater.from(this);
-        //Get the layout inflater
-        //View signView = inflater.inflate(R.layout.sign_in, null);
+        final LayoutInflater li = LayoutInflater.from(this);
+        final View prompt = li.inflate(R.layout.sign_in, null);
 
-        AlertDialog.Builder builderSign = new AlertDialog.Builder(EncryptionActivity.this);
-        builderSign.setView(R.layout.sign_in)
-                .setTitle("Insert your Username and Password")
+        //Dialog per inserire la password e verificarla
+        final AlertDialog.Builder builderSign = new AlertDialog.Builder(this);
+        builderSign.setView(prompt);
+        final EditText check1 = (EditText) prompt.findViewById(R.id.edit_text_password);
+        final EditText check2 = (EditText) prompt.findViewById(R.id.edit_text_confirmpassword);
+        builderSign.setTitle("Please enter a password")
                 .setCancelable(false)
                 .setPositiveButton("Insert", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //Inserire operazioni del pulsante positivo
+                    //Inserire operazioni del pulsante positivo
+                        String passwordCheck2 = check2.getText().toString();
+                        String passwordCheck1 = check1.getText().toString();
+                            if (passwordCheck1.equals(passwordCheck2)) {
+                                password = passwordCheck1;
+                                Toast.makeText(EncryptionActivity.this, "OK", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                            else {
+                                Toast.makeText(EncryptionActivity.this, "Password uncorrected", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //Inserire operazioni per il ritornare allìattività
+        //Inserire operazioni per il ritornare allìattività
                     }
                 });
-        builderSign.show();
+        builderSign.create().show();
+
     }
+
 }

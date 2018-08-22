@@ -7,19 +7,21 @@
     android:padding="10dp" >
 
     <EditText
-        android:id="@+id/edit_text_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        android:singleLine="true">
-        <requestFocus/>
-    </EditText>
-
-    <EditText
         android:id="@+id/edit_text_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="Insert password"
+        android:inputType="textPassword"
+        android:singleLine="true">
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/edit_text_confirmpassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm password"
         android:inputType="textPassword"
         android:ems="10">
     </EditText>
