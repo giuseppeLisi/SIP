@@ -4,6 +4,7 @@ import android.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+// Implements a Blowfish algorithm to encryption and decryption a string
 public class BlowfishChiper {
 
     public static String encryption(String plainText, String key){

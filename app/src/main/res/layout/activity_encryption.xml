@@ -32,7 +32,7 @@
         android:layout_margin="@dimen/margin_layout_min"
         android:text="@string/text_button_to_encry"
         android:visibility="invisible"
-        android:onClick="signIn"/>
+        android:onClick="confirmPass"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

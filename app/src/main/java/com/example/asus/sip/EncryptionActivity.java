@@ -1,27 +1,21 @@
 package com.example.asus.sip;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -40,6 +34,8 @@ public class EncryptionActivity extends AppCompatActivity {
 
     private String userChoosenTask;
     private String password;
+
+    private Bitmap bm=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,10 +112,6 @@ public class EncryptionActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
-
-        //Setta visibilità button e editText per acquisire la stringa da criptare
-        buttonGoEncry.setVisibility(View.VISIBLE);
-        //textToEncry.setVisibility(View.VISIBLE);
     }
 
     //Manipola il risultato proveniente da startActivityForResult() e richiama uno dei due metodi
@@ -165,7 +157,7 @@ public class EncryptionActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
 
-        Bitmap bm=null;
+        //Bitmap bm=null; voglio testare la visibilità dall'esterno
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
@@ -173,17 +165,17 @@ public class EncryptionActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        //Setta visibilità button e editText per acquisire la stringa da criptare
+        //Setta visibilità button e editText per acquisire la stringa da criptare e imposta l'immagine nell'ImageView
         buttonGoEncry.setVisibility(View.VISIBLE);
         textToEncry.setVisibility(View.VISIBLE);
-
         boxImageEnc.setImageBitmap(bm);
     }
 
-    public void signIn(View view) {
+    //Metodo per la richiesta della password
+    public void confirmPass(View view) {
 
         final LayoutInflater li = LayoutInflater.from(this);
-        final View prompt = li.inflate(R.layout.sign_in, null);
+        final View prompt = li.inflate(R.layout.confirmpass, null);
 
         //Dialog per inserire la password e verificarla
         final AlertDialog.Builder builderSign = new AlertDialog.Builder(this);
@@ -192,19 +184,21 @@ public class EncryptionActivity extends AppCompatActivity {
         final EditText check2 = (EditText) prompt.findViewById(R.id.edit_text_confirmpassword);
         builderSign.setTitle("Please enter a password")
                 .setCancelable(false)
+                //Operazioni del pulsante positivo
                 .setPositiveButton("Insert", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                    //Inserire operazioni del pulsante positivo
+                        //verifica dell'immissione della password
                         String passwordCheck2 = check2.getText().toString();
                         String passwordCheck1 = check1.getText().toString();
                             if (passwordCheck1.equals(passwordCheck2)) {
                                 password = passwordCheck1;
                                 Toast.makeText(EncryptionActivity.this, "OK", Toast.LENGTH_SHORT)
                                         .show();
+                                GetSetPixels.setStego(bm, password);
                             }
                             else {
-                                Toast.makeText(EncryptionActivity.this, "Password uncorrected", Toast.LENGTH_SHORT)
+                                Toast.makeText(EncryptionActivity.this, "Password uncorrected. Try again!!!", Toast.LENGTH_SHORT)
                                         .show();
                             }
                     }
@@ -212,7 +206,7 @@ public class EncryptionActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-        //Inserire operazioni per il ritornare allìattività
+                    //Operazioni per il ritornare all'attività
                     }
                 });
         builderSign.create().show();
